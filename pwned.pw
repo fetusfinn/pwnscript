@@ -1,0 +1,8 @@
+|
+| pwned script v1 example
+|
+
+use test
+
+var v1 = 4
+var v2 = 2

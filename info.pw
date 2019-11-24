@@ -1,0 +1,255 @@
+/*
+ *  pwned script info
+ */
+
+|   Scripts must end with the extention ".pw", e.g. "script.pw"
+|   Scripts are read and executed line by line until the end of the file
+|   Scripts are run until the end of the line or until a comment or an error
+|
+
+< tokens >
+
+token       | documentation
+
+void        | wildcard type | has a value of null | has no type yet | can still be assigned
+byte        | char | boolean | tiny number | value will be stored as a char but displayed as a number e.g. 0-255, converted to text via casting
+num         | non decimal number
+dec         | decimal number
+long        | precise decimal number | unused | double in c++ not a long
+string      | string of characters | any text that isnt a single char
+
+null        | null value | default value of all variables | will be returns when a function fails to return its intended return type
+true        | has a byte value of 1
+false       | has a byte value of 0
+
+use         | used to import other files that are needed for this script
+
+var         | used to define a variable
+var_name    | the name of variable, comes directly after a var token or var list
+
+|           | bar, single line comment
+||          | multi line comment start and end
+
+,           | comma, and     operator | used while defining and assigning variables to seperate them
+?           | or             operator
+!           | not            operator | also used to end a statement e.g. if ... !if
+==          | equality       operator
+!=          | not equals     operator
+
++           | addition       operator
+-           | minus          operator
+*           | multiplication operator
+/           | division 	     operator
+%           | modulus        operator
+=           | assinment      operator
+<           | less than      operator
+>           | greater than   operator
+++          | increment      operator
+--          | decrement      operator
+
+.           | object access  operator
+
+""          | string start / end | if a string isnt ended then it will end at the end of the line
+''          | byte   start / end | if longer than 1 char then the first char is used
+
+{}          | array          consturtor
+[]          | array access   operator
+()          | calling functions
+
+if          | if statement
+for         | for loop
+while       | while loop
+
+func        | see < functions >
+:           | return        operator
+
+            | future tokens | tokens that might be implemented in future versions
+\           |
+~           |
+@           |
+#           |
+$           |
+^           |
+&           |
+
+-----------------------------
+
+< special tokens >
+
+Characters that you get when holding alt/option
+Currently none
+
+-----------------------------
+
+< error >
+
+An error is when something goes wrong in the script, if one
+occurs then the line will be skipped and the next line will
+start.
+
+TODO : Error logging module
+
+use errors
+
+errors.log(string path)
+
+in c++
+
+void c_errors::log(const std::string& log_file_path)
+{
+    g_log_file.open(log_file_path);
+    // close in shutdown func
+}
+
+void c_errors::on_error(const error_t& error)
+{
+    g_log_file << error << "\n";
+}
+
+-----------------------------
+
+< syntax >
+
+If a line has invalid syntax, all the data up until the invalid syntax will be processed
+
+Redefinition of a variable  | var v1, v1, v2    | everything from the second v1 will be skipped
+Out of place token          | var v1, ? v2      | everything from the ? will be skipped
+Extra assignment values     | var v1 = 1, 2     | everything after 1 will be ignored
+Another example of ^        | v1 = 1, 2         | same as ^
+Undefined variable          | v1 = "text"       | everything from the undefined variable will be skipped
+
+-----------------------------
+
+< types >
+
+"type tokens" refer to the tokens "byte", "num", "dec", "long", "string"
+
+All types are signed except byte which is unsigned
+Unsigned type support might be added later, maybe "var!" for unsigned
+
+The type of a variable defined with the "var" token is determined
+The type tokens can be used in place of a "var" token but this is generally not done
+The type tokens should be used when defining arguments for a function e.g.
+
+Once the type of a variable has been determined it cannot be changed, unless explicitly stated, see < type casting >
+
+< type determination >
+
+TODO
+
+< numbers >
+
+type |    range     | usage
+
+byte | 0 to 255     | booleans, small numbers
+num  | +-2147483648 | numbers
+dec  | +-7  digits  | decimal numbers
+long | +-15 digits  | big numbers
+
++- means it can be positive or negative
+
+Example of how type is determined for number types
+
+var v1, v2, v3, v4, v5, v6 = 1, 3.14, -17, 1.2345678910, 1000, 1000.01
+
+v1 will have a type of "byte" because its  value is in the byte range
+v2 will have a type of "dec"  because it's a decimal value with less than 7 digits
+v3 will have a type of "num"  because its  value is negative
+v4 will have a type of "long" because it's a decimal value with more than 7 digits
+v5 will have a type of "num"  because it's value is in the num range but outside of the byte range
+v6 will have a type of "dec"  because it's a decimal value
+
+-----------------------------
+
+< arrays >
+
+Arrays are stored as std::vector's | maybe use std::deque so we can add to the front
+Counts from 0
+If the given index is larger than the size the last element will be given instead
+
+Usage :
+
+var arr[]   = { 1, 2, 3, 4 }    | arr will be defined as an array with no size then the given value will be inserted into the array in order
+var v1      = arr[2]            | v1  will be assigned the value at index 2 of array arr which is 3 because we count from 0
+array[0]    = 2                 | the value at index 0 will be reassigned to the given value of 2
+
+var a1[], a2[] = { 1.1, 2.2., 3.3 }, { "a", "b", "c" }      | defining multiple arrays at once
+var a3[]    = a1;
+
+|
+| Errors
+|
+var v2 = a1;
+
+-----------------------------
+
+< type casting >
+
+Will try cast the variable to the given type, where argument "type" is the token for the type, if the cast fails it will return a value of "null"
+
+Usage :
+
+var_name.cast_to(type)
+
+| Note : defining with a type shouldnt be done, only being used here to show us the orignial type
+
+num     v1  = 123
+string  v2  = v1.cast_to(string)
+long    v3  = v2.cast_to(long)      | this works because the string only contains numbers and no letters
+
+todo : use regex to check for letters in a string before casting
+
+| This will cause an error because a string cant be
+string  v1  = "string_value"
+num     v2  = v1.cast_to(num)       | will return a value of null
+
+-----------------------------
+
+< variable definition >
+
+This example should be run from the same script to get the desired results
+
+var v1 = val1               | v1 will be assigned the value val1
+var v1                      | v1 has already been assigned, syntax error, line will be skipped
+var v1, v2 = val1, val2     | v1 has already been assigned, syntax error, v2 will not be defined or assigned a value
+var v2, v1 = val2, val1     | v2 will be defined but v1 has already been defined, syntax error, v2 will not be assigned its value of val2
+var v3, v4 = val3, val4     | v3 will be assigned val3 and v4 will be assigned val4
+var v5                      | v5 will be defined but since it isnt being assigned we cant determine the type so it we be given the "void" type
+var v6, v7 = v1             | v6 will be assigned the value of v1 and v7 will have a type of "void" and value of "null"
+var v8 = v2, v3             | v8 will be assigned v2 and v3 will be ignored due to the syntax rule
+v8 = v4                     | v8 has already been defined so its value will be reassigned
+v9 = v5                     | v9 has not been defined, syntax error, line will be skipped
+var v10, v11 = v5, v9       | v10 and v11 will be defined and v10 will be assigned v5 but since v9 hasnt been defined v11 will be assigned "null"
+
+-----------------------------
+
+< functions >
+
+Defined by token "func"
+Function names can only start with letters or underscores
+Functions are called like : my_func(arg, arg2, ...)
+
+// FOR FINN ONLY TODO TODO TODO TODO
+todo    | void load_functions() {...}
+
+| example addition function of the same type
+func add_two, num one, two
+    : one + two             | will return the value of one + two
+!func
+
+| example addition function of different types
+func add_two, num one, dec two
+    : one + two             | will return the value of one + two
+!func                       | the return type will be the one with the largest memory (sizeof(type1) < sizeof(type2)) so that percision isnt lost
+
+-----------------------------
+
+< use token >
+
+Usage :
+
+start thread for each use
+
+use path.to.file
+
+-----------------------------
