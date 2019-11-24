@@ -23,8 +23,7 @@ null        | null value | default value of all variables | will be returns when
 
 use         | used to import other files that are needed for this script
 
-var         | used to define a local  variable | only accessable in the file it is defined | the token directly after this will be the variable name
-global      | used to define a global variable that will be accessable throughout the whole script (after it has been registered)
+var         | used to define a variable | the token directly after this will be the variable name / identifier
 
 if          | if statement
 for         | for loop
