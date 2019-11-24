@@ -33,7 +33,6 @@
 		B615AC302384221600BAAAEE /* tokens.pw */ = {isa = PBXFileReference; lastKnownFileType = text; path = tokens.pw; sourceTree = "<group>"; };
 		B615AC322384224A00BAAAEE /* pwned.pw */ = {isa = PBXFileReference; lastKnownFileType = text; path = pwned.pw; sourceTree = "<group>"; };
 		B62B0335237A0BBF00BD74C5 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
-		B643A2AB238A0E76007656DE /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		B66EE96A237ADE5500B10E38 /* module.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = module.h; path = Module/module.h; sourceTree = "<group>"; };
 		B66EE96B237ADE5500B10E38 /* module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = module.cpp; path = Module/module.cpp; sourceTree = "<group>"; };
 		B66EE96D237ADE6300B10E38 /* loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = loader.h; path = Module/loader.h; sourceTree = "<group>"; };
@@ -87,6 +86,13 @@
 				B67BCBB52384C32A00816931 /* test.pw */,
 			);
 			name = Script;
+			sourceTree = "<group>";
+		};
+		B643A2AC238A1039007656DE /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tokens;
 			sourceTree = "<group>";
 		};
 		B66EE969237ADD1600B10E38 /* Modules */ = {
@@ -148,8 +154,8 @@
 		B6FFA2FF237A092D009AB31C = {
 			isa = PBXGroup;
 			children = (
-				B643A2AB238A0E76007656DE /* readme.md */,
 				B6FFA312237A0A05009AB31C /* Main */,
+				B643A2AC238A1039007656DE /* Tokens */,
 				B66EE970237AE48700B10E38 /* Lexer */,
 				B66EE97D237AF35900B10E38 /* Parser */,
 				B6FF5FAB237B687F00D0C54B /* Interpreter */,

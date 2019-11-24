@@ -4,6 +4,10 @@
 #pragma once
 
 /*
+ *  todo : move to the files where they belong
+ */
+
+/*
  *  Type definitions
  */
 

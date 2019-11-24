@@ -16,7 +16,7 @@
 
 
 /*
- *  todo : move
+ *  todo : move, globals.h or something
  */
 
 

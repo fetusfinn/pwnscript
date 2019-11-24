@@ -7,7 +7,7 @@
  *
  *  ALL SCRIPT FILES MUST END WITH .PW
  *
- *  Check all "todos"
+ *  Check all "todo"'s
  *
  *  Lexer   | script loader
  *  Flex    |
@@ -15,7 +15,7 @@
  *
  *  Add dylib loader so c++ modules can be used
  *
- *  "Writing  language is hard while high"
+ *  "Writing a language is hard while high"
  *
  *  Links :
  *
@@ -51,11 +51,11 @@ std::unordered_map<token_type_t, std::vector<token_t>> g_token_list;
 std::vector<variable_t> g_variables;
 
 /*
- *
+ *  Local variables
  */
 
 // the path to the token list
-std::string m_token_list_path = g_pwn_script_folder + "tokens.pw";
+static std::string m_token_list_path = g_pwn_script_folder + "tokens.pw";
 
 /*
  *  parse_arguments
@@ -119,23 +119,24 @@ bool load_token_list()
     //
     //  # token_type_id
     //
-    //  token | documentation
-    //  token | documentation
+    //  token_t | documentation
+    //  token_t | documentation
     //
     
     // current line
     line_t line;
 
     // the current type of tokens that we are importing
-    // section kinda
+    // kinda like a section
     token_type_t type = kInvalidType;
     
-    // the tokens of the type ^ that we have imported so far
+    // the tokens of the type ^ and all tokens that we have imported so far
     std::vector<token_t> current_tokens, all_tokens;
     
     // token list file
     std::ifstream token_list_file(m_token_list_path);
     
+    // read it line by line
     while(std::getline(token_list_file, line))
     {
         // empty so just skip
